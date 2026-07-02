@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uma Mensagem Para Você</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #0b1020, #05070f);
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* ESTRELAS */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {opacity: 0.2; transform: scale(1);}
+    to {opacity: 1; transform: scale(1.4);}
+}
+
+/* CRUZ */
+#cross {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 130px;
+
+    color: rgba(214, 194, 122, 0.45);
+
+    text-shadow:
+        0 0 8px rgba(214, 194, 122, 0.5),
+        0 0 20px rgba(214, 194, 122, 0.3),
+        0 0 45px rgba(255, 215, 140, 0.18);
+
+    animation: crossBreath 5s infinite ease-in-out;
+}
+
+@keyframes crossBreath {
+    0%, 100% {
+        opacity: 0.35;
+        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.06);
+        filter: brightness(1.3);
+    }
+}
+#message {
+    animation: fadeInMessage 1.5s ease forwards;
+    font-family: 'Cormorant Garamond', serif;
+    font-size:26px;
+    line-height:1.8;
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+@keyframes fadeInMessage {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+/* CARD */
+.card {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    padding: 25px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.verse {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.ref {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+}
+
+button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #d6c27a;
+    cursor: pointer;
+}
+#text{
+    font-family:'Cormorant Garamond', serif;
+    font-size:28px;
+    line-height:1.8;
+}
+
+#signature{
+    display:none;
+
+    margin-top:40px;
+
+    font-family:'Playfair Display', serif;
+
+    font-size:30px;
+
+    font-style:italic;
+}
+
+#finalText{
+    display:none;
+
+    margin-top:50px;
+
+    font-family:'Inter', sans-serif;
+
+    font-size:16px;
+
+    color:#d6c27a;
+
+    letter-spacing:1px;
+}
+
+#msg {
+    margin-top: 10px;
+    color: red;
+}
+
+/* TRANSIÇÃO */
+#transition {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+/* MENSAGEM */
+</style>
+</head>
+
+<body>
+
+<audio id="ambientAudio" loop>
+    <source src="ambiente.mp3" type="audio/mpeg">
+</audio>
+
+<div id="stars"></div>
+<div id="cross">✝</div>
+
+<div class="card" id="login">
+    <h2>✝</h2>
+
+    <p class="verse">
+        "Melhor é serem dois do que um,
+        porque têm melhor recompensa pelo seu trabalho."
+    </p>
+
+    <p class="ref">Eclesiastes 4:9</p>
+
+    <input id="password" type="password" placeholder="Digite a senha">
+    <button onclick="check()">Continuar</button>
+
+    <p id="msg"></p>
+</div>
+
+<div id="transition">
+    <h2>Que Deus ilumine sempre seus caminhos.</h2>
+</div>
+
+<div id="message">
+    <h3 id="text"></h3>
+    <br><br>
+    <p>Com carinho,<br><b><i>Seu Canga</i></b></p>
+    <br>
+    <div id="finalText" style="display:none;">
+    Agora, abra o seu presente.
+    </div>
+</div>
+
+<script>
+const SENHA = "1234";
+const MENSAGEM = "Aqui vai sua mensagem depois.";
+
+function check(){
+    const input = document.getElementById("password").value;
+
+    if(input === SENHA){
+        document.getElementById("login").style.display = "none";
+        document.getElementById("transition").style.display = "flex";
+
+        setTimeout(() => {
+            document.getElementById("transition").style.display = "none";
+            document.getElementById("message").style.display = "block";
+            typeText();
+        }, 2500);
+
+    } else {
+        document.getElementById("msg").innerText = "Senha incorreta.";
+    }
+}
+
+/* efeito digitação */
+function typeText(){
+    let i = 0;
+    const el = document.getElementById("text");
+    const signature = document.querySelector("#message p");
+    
+    signature.style.display = "none"; // esconde assinatura no início
+
+    function typing(){
+        if(i < MENSAGEM.length){
+            el.innerHTML += MENSAGEM.charAt(i);
+            i++;
+            setTimeout(typing, 40);
+        } else {
+            // quando terminar de escrever
+
+            setTimeout(() => {
+                // rola até o final da mensagem
+                document.getElementById("message").scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
+                });
+
+                // mostra assinatura depois de um tempo
+                setTimeout(() => {
+                    signature.style.display = "block";
+                }, 1200);
+
+            }, 100);
+	    setTimeout(() => {
+
+    const finalText = document.getElementById("finalText");
+
+    setTimeout(() => {
+        finalText.style.display = "block";
+    }, 2000);
+
+}, 300);
+        }
+    }
+
+    typing();
+}
+/* estrelas */
+const stars = document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+    const s = document.createElement("div");
+    s.classList.add("star");
+    s.style.top = Math.random()*100 + "vh";
+    s.style.left = Math.random()*100 + "vw";
+    s.style.animationDuration = (2 + Math.random()*3) + "s";
+    stars.appendChild(s);
+}
+
+function createShootingStar() {
+    const star = document.createElement("div");
+
+    star.style.position = "fixed";
+    star.style.width = "5px";
+    star.style.height = "5px";
+    star.style.background = "white";
+    star.style.top = Math.random() * 50 + "vh";
+    star.style.left = "-10px";
+    star.style.boxShadow = "0 0 10px white";
+    star.style.transform = "rotate(45deg)";
+    star.style.opacity = "0.8";
+
+    document.body.appendChild(star);
+
+    let pos = -10;
+
+    const move = setInterval(() => {
+        pos += 8;
+        star.style.left = pos + "px";
+        star.style.top = parseFloat(star.style.top) + 2 + "px";
+
+        if (pos > window.innerWidth + 100) {
+            clearInterval(move);
+            star.remove();
+        }
+    }, 16);
+}
+
+// aparece aleatoriamente
+setInterval(() => {
+    if (Math.random() > 0.7) {
+        createShootingStar();
+    }
+}, 4000);
+window.addEventListener("click", () => {
+    const audio = document.getElementById("ambientAudio");
+    if (audio) {
+        audio.volume = 0.25;
+        audio.play().catch(() => {});
+    }
+});
+</script>
+
+</body>
+</html>
