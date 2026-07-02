@@ -10,7 +10,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -78,12 +78,18 @@ body {
 #message {
     animation: fadeInMessage 1.5s ease forwards;
     font-family: 'Cormorant Garamond', serif;
-    font-size:26px;
+    margin:auto
+    font-size:10px !important;
     line-height:1.8;
     display: none;
     text-align: center;
-    padding: 30px;
+    padding: 40px;
+
+
+
 }
+
+
 
 @keyframes fadeInMessage {
     from {
@@ -144,8 +150,8 @@ button {
 }
 #text{
     font-family:'Cormorant Garamond', serif;
-    font-size:28px;
-    line-height:1.8;
+    font-size:18px;
+    line-height:1.5;
 }
 
 #signature{
@@ -181,12 +187,14 @@ button {
 
 /* TRANSIÇÃO */
 #transition {
+    font-family: 'Cinzel', serif;
     display: none;
     position: absolute;
     width: 100%;
     height: 100%;
-    justify-content: center;
-    align-items: center;
+    margin-top: 200px;
+    justify-content: normal;
+    align-items: normal;
     text-align: center;
     flex-direction: column;
 }
@@ -235,8 +243,37 @@ button {
 </div>
 
 <script>
-const SENHA = "1234";
-const MENSAGEM = "Aqui vai sua mensagem depois.";
+const SENHA = "delta";
+const MENSAGEM = `
+Oi minha canga! <br>
+
+Acho que estou exagerando em tudo aqui, mas voce ja me conhece, sou exagerado, <br>
+
+porem so exagero com quem me importo.<br>
+
+Eu quero que voce saiba o quão importante voce eh para mim.<br>
+
+As vezes Deus coloca pessoas especiais a minha volta, e voce eh uma delas.<br>
+
+Nunca deixe de ser quem voce eh, nunca deixe que ninguem diga que voce não pode.<br>
+
+Nem mesmo eu, se em algum lapso de loucura eu falar ou der a entender isso.<br>
+
+Sei que tou longe de ser o melhor amigo do mundo,<br>
+
+mas corto meu braço fora se voce encontrar um mais leal. kkk<br>
+
+Falo o que não devia, sou chato, discuto por besteira,<br>
+
+mas na hora do vamo ver, vai cometer um erro se eu não for sua primeira opção.<br>
+
+Como amigo, espero de verdade que voce esteja na minha vida sempre.<br>
+
+Por fim, espero que esse livro te ajude a ser a pessoa que voce deseja ser.<br>
+
+Que possa te lembrar que quando não tivermos nossos amigos, Deus esta sempre la por nos.<br>
+
+Que Deus continue te guiando e abençoando!!`;
 
 function check(){
     const input = document.getElementById("password").value;
@@ -266,9 +303,15 @@ function typeText(){
 
     function typing(){
         if(i < MENSAGEM.length){
-            el.innerHTML += MENSAGEM.charAt(i);
+            el.innerHTML = MENSAGEM.substring(0,i+1);
             i++;
-            setTimeout(typing, 40);
+            let tempo = 60;
+        
+
+            if (MENSAGEM.substring(i - 4,i) === "<br>") {
+                tempo = 800;
+            }
+            setTimeout(typing, tempo);
         } else {
             // quando terminar de escrever
 
