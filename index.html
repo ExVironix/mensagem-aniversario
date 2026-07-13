@@ -229,16 +229,17 @@ button {
 </div>
 
 <div id="transition">
+    
     <h2><i>Que Deus ilumine sempre seus caminhos.</i></h2>
 </div>
+
 <div id="message">
-
-    <div id="text"></div>
-
-    <div id="finalText">
-        ✝ Que Deus continue guiando seus passos.
+    <h3 id="text"></h3>
+    <br><br>
+    <p><br><b><i></i></b></p>
+    <br>
+    <div id="finalText" style="display:none;">
     </div>
-
 </div>
 
 <script>
@@ -293,7 +294,7 @@ function typeText(){
     let i = 0;
     const el = document.getElementById("text");
     const signature = document.querySelector("#message p");
-    
+
     signature.style.display = "none"; // esconde assinatura no início
 
     function typing(){
@@ -301,7 +302,7 @@ function typeText(){
             el.innerHTML = MENSAGEM.substring(0,i+1);
             i++;
             let tempo = 60;
-        
+
 
             if (MENSAGEM.substring(i - 4,i) === "<br>") {
                 tempo = 800;
